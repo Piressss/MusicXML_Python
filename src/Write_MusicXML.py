@@ -81,7 +81,7 @@ class WriteMusicXML:
         midi_channel = ET.SubElement(midi_instrument,'midi-channel')
         midi_channel.text = '1'
 
-    def WriteMeasure(self,num,barline):
+    def WriteMeasure(self,num):
         if num == '1':
             # SubElement
             part = ET.SubElement(self.score,'part')
@@ -131,7 +131,7 @@ class WriteMusicXML:
             # SubElement
             attributes = ET.SubElement(measure,'attributes')
 
-    def WriteBar(self,location,barline_style,direction,barline_ending,ending_number):
+    def WriteBar(self,location,barline_style,direction,barline_ending='None',ending_number=0):
         # SubElement
         barline = ET.SubElement(self.score.find('measure'),'barline')
         barline.set('location',location)
@@ -146,7 +146,7 @@ class WriteMusicXML:
         repeat = ET.SubElement(barline,'repeat')
         repeat.set('direction',direction)
 
-    def WriteNote(note_name,note_octave,note_duration,note_type,note_accidental,note_stem,note_slur,slur_type,note_tied,tied_type,note_fermata,fermata_type):
+    def WriteNote(note_name,note_octave,note_duration,note_type,note_accidental='None',note_stem,note_slur='None',slur_type='None',note_tied='None',tied_type,note_fermata='None',fermata_type='None'):
         # Note Part
         note = ET.SubElement(self.score.find('measure'),'note')
         # SubElement
@@ -167,7 +167,7 @@ class WriteMusicXML:
         type_s = ET.SubElement(note,'type')
         type_s.text = note_type
         # SubElement
-        if note_accidental != 'none':
+        if note_accidental != 'None':
             accidental = ET.SubElement(note,'accidental')
             accidental.set('cautionary','no')
             accidental.text = note_accidental
@@ -228,8 +228,6 @@ class WriteMusicXML:
         # SubElement
         staff = ET.SubElement(rest,'staff')
         staff.text = ('1')
-
-
     
     def Indent(self):
         data = ET.tostring(self.score)
