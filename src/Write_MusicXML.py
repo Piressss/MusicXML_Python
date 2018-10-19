@@ -8,7 +8,7 @@ import xml.etree.ElementTree as ET
 
 # Classe para escrita do MusicXML
 
-class Write_MusicXML:
+class WriteMusicXML:
     
     # Construtor
     def __init__(self, composer, title, instrument, division, clef, line, fifth, beats, beat_type):
@@ -23,13 +23,13 @@ class Write_MusicXML:
         self.beat_type  = beat_type
         self.score      =  ET.Element('score-partwise version')
 
-    def Write_Header(self):
+    def WriteHeader(self):
          data = "\"<\?xml version=\"1.0\" encoding=\"UTF-16\" standalone=\"no\"?>\n"
          data = data + "\"<!DOCTYPE score-partwise PUBLIC \"-//Recordare//DTD MusicXML 1.1 Partwise//EN\"\n"
          data = data + "\"http://www.musicxml.org/dtds/partwise.dtd\">\n"
          return data
 
-    def Write_Config(self):
+    def WriteConfig(self):
         self.score.set('version','1.1')
         # SubElement 1 
         identification  = ET.SubElement(self.score,'identification')
@@ -81,7 +81,7 @@ class Write_MusicXML:
         midi_channel = ET.SubElement(midi_instrument,'midi-channel')
         midi_channel.text = '1'
 
-    def Write_Measure(self,num,barline):
+    def WriteMeasure(self,num,barline):
         if num == '1':
             # SubElement
             part = ET.SubElement(self.score,'part')
@@ -131,7 +131,7 @@ class Write_MusicXML:
             # SubElement
             attributes = ET.SubElement(measure,'attributes')
 
-    def Write_Bar(self,location,barline_style,direction,barline_ending,ending_number):
+    def WriteBar(self,location,barline_style,direction,barline_ending,ending_number):
         # SubElement
         barline = ET.SubElement(self.score.find('measure'),'barline')
         barline.set('location',location)
@@ -146,7 +146,7 @@ class Write_MusicXML:
         repeat = ET.SubElement(barline,'repeat')
         repeat.set('direction',direction)
 
-    def Write_Note(note_name,note_octave,note_duration,note_type,note_accidental,note_stem,note_slur,slur_type,note_tied,tied_type,note_fermata,fermata_type):
+    def WriteNote(note_name,note_octave,note_duration,note_type,note_accidental,note_stem,note_slur,slur_type,note_tied,tied_type,note_fermata,fermata_type):
         # Note Part
         note = ET.SubElement(self.score.find('measure'),'note')
         # SubElement
@@ -194,7 +194,7 @@ class Write_MusicXML:
             fermata = ET.SubElement(notations,'fermata')
             fermata.set('type',fermata_type)
 
-    def Write_Dynamics(self,dynamics_name):
+    def WriteDynamics(self,dynamics_name):
         # SubElement
         direction = ET.SubElement(self.score.find('measure'),'direction')
         direction.set('placement','above')
@@ -211,7 +211,7 @@ class Write_MusicXML:
         staff = ET.SubElement(direction,'staff')
         staff.text = ('1')
         
-    def Write_Rest(self,rest_duration,rest_type):
+    def WriteRest(self,rest_duration,rest_type):
         # Note Part
         note = ET.SubElement(self.score.find('measure'),'note')
         # SubElement
